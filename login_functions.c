@@ -4,15 +4,6 @@
 #include <stdbool.h>
 #include "login.h"
 
-void init() {
-printf("|\     /|(  ____ \( \      (  ____ \(  ___  )(       )(  ____ \( )\n");
-printf("| )   ( || (    \/| (      | (    \/| (   ) || () () || (    \/| |\n");
-printf("| | _ | || (__    | |      | |      | |   | || || || || (__    | |\n");
-printf("| |( )| ||  __)   | |      | |      | |   | || |(_)| ||  __)   | |\n");
-printf("| || || || (      | |      | |      | |   | || |   | || (      (_)\n");
-printf("| () () || (____/\| (____/\| (____/\| (___) || )   ( || (____/\ _ \n");
-printf("(_______)(_______/(_______/(_______/(_______)|/     \|(_______/(_)\n");
-}
 
 void handle_input(int *input) {
     printf("Enter a number for operations:\n1) Login\n2) Register a new account\n>>");
@@ -39,9 +30,7 @@ void read_credentials(FILE* fptr, int *login_successful, char username[], char p
     }
     else {
         while (fgets(buffer, sizeof(buffer), fptr) != NULL) {
-            // Remove trailing newline character, if present
             buffer[strcspn(buffer, "\n")] = '\0';
-
             left = strtok(buffer, delimeter);
             right = strtok(NULL, delimeter);
 
@@ -56,6 +45,17 @@ void read_credentials(FILE* fptr, int *login_successful, char username[], char p
     fclose(fptr);
 }
 
-void write_credentials(FILE* fptr) {
-    printf("Nothing yet :c\n");
+int write_credentials(FILE* fptr) {
+    fptr = fopen("users.txt", "a");
+    char username[50];
+    char password[30];
+    printf("Enter username and password:\n>>");
+    scanf("%s", &username);
+    printf(">>");
+    scanf("%s", &password);
+
+
+    fputs("%s;%s", username, password);
+    fclose(fptr);
+    return 1;
 }

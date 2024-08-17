@@ -23,7 +23,6 @@ int main(void) {
     while (true) {
         switch(current_state) {
             case WAITING_FOR_INPUT :
-                init();
                 while (current_state == WAITING_FOR_INPUT) {
                     handle_input(&input);
                     if (input == 1) {
@@ -46,8 +45,13 @@ int main(void) {
                 current_state = WAITING_FOR_INPUT;
                 break;
             case REGISTER :
-                write_credentials(fptr);
-                current_state = WAITING_FOR_INPUT;
+                int success = write_credentials(fptr);
+                if (success == 1) {
+                    current_state = WAITING_FOR_INPUT;
+                }
+                else {
+                    printf("Write to file not successful!\n");
+                }
             break;
             default :
                 current_state = WAITING_FOR_INPUT;
